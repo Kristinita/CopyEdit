@@ -34,13 +34,14 @@ class CopyEditCommand(sublime_plugin.TextCommand):
 			elif copy_with_empty_sel:
 				new_sel_strings.append(self.view.substr(self.view.full_line(s)))
 		
-		if len(new_sel_strings) > 0:
-			selection_strings[:] = [] #.clear() doesn't exist in 2.7
-			selection_strings.extend(new_sel_strings)
-			line_ending = line_endings[self.view.line_endings()]
-			sublime.set_clipboard(line_ending.join(selection_strings))
-			return True
-		return False
+class CopyEditCommand(sublime_plugin.TextCommand):
+                        selection_strings[:] = [] #.clear() doesn't exist in 2.7
+                        selection_strings.extend(new_sel_strings)
+                        line_ending = line_endings[self.view.line_endings()]
+                        self.view.window().run_command("copy")
+                        sublime.set_clipboard(line_ending.join(selection_strings))
+                        return True
+                return False
 	
 	def run(self, edit, verb="Copied"):
 		if self.copy(edit):
